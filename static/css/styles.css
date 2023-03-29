@@ -1,0 +1,10 @@
+.container {
+    margin-top: 10px;
+    border: 1px solid aquamarine;
+    background-color: aquamarine;
+}
+.inside {
+    border: 1px solid cornflowerblue;
+    background-color: cornflowerblue;
+
+}
