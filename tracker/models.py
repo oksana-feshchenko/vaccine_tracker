@@ -27,13 +27,6 @@ class Child(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-class Complication(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    date_occurrence = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
 
 class Vaccine(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -52,11 +45,19 @@ class Vaccination(models.Model):
     child = models.ForeignKey(to=Child, on_delete=models.CASCADE, related_name="vaccinations")
     date_vaccination = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
-    complications = models.ManyToManyField(to=Complication, related_name="vaccines", blank=True)
 
     class Meta:
         ordering = ["date_vaccination"]
 
     def __str__(self):
         return f"{self.vaccine} for {self.child}"
+
+class Complication(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    date_occurrence = models.DateTimeField(auto_now_add=True)
+    vaccination = models.ForeignKey(to=Vaccination, related_name="complications", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
 
