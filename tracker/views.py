@@ -115,5 +115,46 @@ class VaccinationDeleteView(LoginRequiredMixin, generic.DeleteView):
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
         return context
 
+class ComplicationListView(generic.ListView):
+    model = Complication
+    template_name = "tracker/complication_list.html"
+
+
+class ComplicationCreateView(generic.CreateView):
+    model = Complication
+    form_class = ComplicationCreateForm
+    success_url = reverse_lazy("tracker:complication-list")
+
+    def get(self, request, *args, **kwargs):
+        vaccination_id = self.kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        vaccination = get_object_or_404(Vaccination, pk=self.kwargs['pk'])
+        form.instance.vaccination = vaccination
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
+
+
+class ComplicationUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Complication
+    fields = ("description", )
+    success_url = reverse_lazy("tracker:complication-list")
+
+
+class ComplicationDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Complication
+    success_url = reverse_lazy("tracker:complication-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
+
+
 
 
