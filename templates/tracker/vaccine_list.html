@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load whole_division %}
+
+
+
+{% block content %}
+
+ <table class="table">
+       <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Number of doses</th>
+        <th>Recommended age for first dose</th>
+      </tr>
+
+      {% for vaccine in vaccine_list %}
+        <tr>
+          <td>
+              {{ vaccine.id }}
+          </td>
+          <td>
+              {{ vaccine.name  }}
+          </td>
+          <td>
+              {{ vaccine.number_of_doses  }}
+          </td>
+         <td>
+           {% if vaccine.age_for_first_dose_days < 31 %}
+           {{ vaccine.age_for_first_dose_days }} day{{ vaccine.age_for_first_dose_days|pluralize}}
+           {% else %}
+           {% if vaccine.age_for_first_dose_days < 365 %}
+          {% whole_division vaccine.age_for_first_dose_days 31 %} months
+             {% else %}
+             {% if vaccine.age_for_first_dose_days > 365 %}
+           {% whole_division vaccine.age_for_first_dose_days 365 %} year
+           {% else %}
+           {% endif %}
+           {% endif %}
+           {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+{% endblock %}

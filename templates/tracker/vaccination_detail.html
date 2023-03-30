@@ -1,0 +1,18 @@
+<h1>{{vaccination.vaccine}}</h1>
+<a href="{% url "tracker:vaccination-update" pk=vaccination.id %}">UPDATE</a>
+
+<a href="{% url "tracker:vaccination-delete" pk=vaccination.id %}">Delete</a>
+
+Information:
+{{vaccination.vaccine}} was administrated to child {{ vaccination.child }} on date {{ vaccination.date_vaccination }}.
+
+<a href="{%  url 'tracker:complication-create'  pk=vaccination.id %}" class="btn btn-primary btn-block">
+   Add side effect you noticed
+    </a>
+
+{% if vaccination.complications.all %}
+Number of side effects your noticed {{ vaccination.complications.count }}
+More detail information here:
+
+<a href="{% url 'tracker:complication-list' %}"> more detail information here</a>
+{% endif %}
