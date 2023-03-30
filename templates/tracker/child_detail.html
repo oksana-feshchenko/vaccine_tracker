@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load compare_date %}
+{% load calculate_date %}
+
+{% block content %}
+  Child: {{ child.first_name }} {{ child.last_name }}
+  <a href="{% url 'tracker:child-delete' pk=child.id %}" class="btn btn-secondary link-to-page"> Delete</a>
+  <a href="{% url 'tracker:child-update' pk=child.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  <a href="{%  url 'tracker:vaccination-create' pk=child.id %}" class="btn btn-primary btn-block">
+   Add vaccination
+    </a>
+  {% if child.vaccinations.all%}
+  Vaccine that {{ child.first_name }} already received:
+   <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Recommended date</th>
+        <th>Actual date</th>
+        <th>Timing</th>
+
+      </tr>
+     {% for vaccination in child.vaccinations.all %}
+     <tr>
+          <td><a href="{% url 'tracker:vaccination-detail' vaccination.id %}"> {{vaccination.vaccine }}</a>
+          </td>
+          <td>
+          {% calculate_date child.birth_date vaccination.vaccine.age_for_first_dose_days %}
+          </td>
+          <td>
+              {{ vaccination.date_vaccination}}
+          </td>
+          <td>
+            {% compare_date child.birth_date vaccination.vaccine.age_for_first_dose_days vaccination.date_vaccination %}
+
+          </td>
+
+     {% endfor %}
+{% endif %}
+
+<br>
+ <a href="#" class="btn btn-primary btn-block">
+   See all vaccine to do
+    </a>
+{% endblock %}
