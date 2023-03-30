@@ -1,45 +1,49 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from tracker.forms import VaccinationCreateForm, ComplicationCreateForm
+from tracker.forms import VaccinationCreateForm, ComplicationCreateForm, ParentCreationForm
 from tracker.models import Child, Parent, Vaccine, Vaccination, Complication
 
 
 def index(request):
     num_children = Child.objects.count()
     num_parents = Parent.objects.count()
+    num_complications = Complication.objects.count()
 
     context = {
         "num_children": num_children,
         "num_parents": num_parents,
+        "num_complications": num_complications,
     }
 
     return render(request, "tracker/index.html", context=context)
 
 
-class VaccineListView(generic.ListView):
+class VaccineListView(LoginRequiredMixin, generic.ListView):
     model = Vaccine
     queryset = Vaccine.objects.all()
     template_name = "tracker/vaccine_list.html"
 
 
-class ChildListView(generic.ListView):
+class ChildListView(LoginRequiredMixin, generic.ListView):
     model = Child
     queryset = Child.objects.prefetch_related("vaccinations__vaccine")
     template_name = "tracker/child_list.html"
 
 
-class ChildDetailView(generic.DetailView):
+class ChildDetailView(generic.DetailView, LoginRequiredMixin):
     model = Child
     queryset = Child.objects.prefetch_related("vaccinations")
     template_name = "tracker/child_detail.html"
 
 
-class ChildCreateView(generic.CreateView):
+class ChildCreateView(generic.CreateView, LoginRequiredMixin):
     model = Child
-    fields = "__all__"
+    fields = ("first_name", "last_name", "gender", "birth_date")
     success_url = reverse_lazy("tracker:child-list")
 
     def get_context_data(self, **kwargs):
@@ -47,10 +51,14 @@ class ChildCreateView(generic.CreateView):
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
         return context
 
+    def form_valid(self, form):
+        form.instance.parent = self.request.user
+        return super().form_valid(form)
+
 
 class ChildUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Child
-    fields = "__all__"
+    fields = ("first_name", "last_name", "gender", "birth_date")
     success_url = reverse_lazy("tracker:child-list")
 
 
@@ -64,7 +72,7 @@ class ChildDeleteView(LoginRequiredMixin, generic.DeleteView):
         return context
 
 
-class VaccinationDetailView(generic.DetailView):
+class VaccinationDetailView(LoginRequiredMixin, generic.DetailView):
     model = Vaccination
     template_name = "tracker/vaccination_detail.html"
 
@@ -74,7 +82,7 @@ class VaccinationDetailView(generic.DetailView):
         return context
 
 
-class VaccinationCreateView(generic.CreateView):
+class VaccinationCreateView(LoginRequiredMixin, generic.CreateView):
     model = Vaccination
     form_class = VaccinationCreateForm
 
@@ -108,19 +116,26 @@ class VaccinationDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Vaccination
 
     def get_success_url(self, **kwargs):
-        return reverse("tracker:child-detail", kwargs={'pk': self.kwargs['pk']})
+        return reverse("tracker:child-detail", kwargs={"pk": self.kwargs["c_id"]})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
         return context
 
-class ComplicationListView(generic.ListView):
+
+class ComplicationListView(LoginRequiredMixin, generic.ListView):
     model = Complication
     template_name = "tracker/complication_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["vaccine_id"] = self.request.META.get("HTTP_REFERER").split("/")[-2]
+        return context
 
-class ComplicationCreateView(generic.CreateView):
+
+class ComplicationCreateView(LoginRequiredMixin, generic.CreateView):
     model = Complication
     form_class = ComplicationCreateForm
     success_url = reverse_lazy("tracker:complication-list")
@@ -156,5 +171,24 @@ class ComplicationDeleteView(LoginRequiredMixin, generic.DeleteView):
         return context
 
 
+class ParentCreateView(generic.CreateView):
+    model = Parent
+    form_class = ParentCreationForm
+    success_url = reverse_lazy("tracker:index")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        parent = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+        login(self.request, parent)
+        messages.success(self.request, 'Thanks for registering. You are now logged in.')
+        return response
+
+
+class ParentDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Parent
+    template_name = "tracker/parent_detail.html"
+
+    def get_success_url(self, **kwargs):
+        return reverse("tracker:parent-detail", kwargs={"pk": self.kwargs["pk"]})
 
 

@@ -16,6 +16,8 @@ from tracker.views import (
     ComplicationCreateView,
     ComplicationUpdateView,
     ComplicationDeleteView,
+    ParentCreateView,
+    ParentDetailView,
 )
 
 urlpatterns = [
@@ -29,11 +31,13 @@ urlpatterns = [
     path("vaccination/<int:pk>/", VaccinationDetailView.as_view(), name="vaccination-detail"),
     path("children/<int:pk>/vaccination/create/", VaccinationCreateView.as_view(), name="vaccination-create"),
     path("vaccination/<int:pk>/update/", VaccinationUpdateView.as_view(), name="vaccination-update"),
-    path("vaccination/<int:pk>/delete/", VaccinationDeleteView.as_view(), name="vaccination-delete"),
+    path("children/<int:c_id>/vaccination/<int:pk>/delete/", VaccinationDeleteView.as_view(), name="vaccination-delete"),
     path("complication/", ComplicationListView.as_view(), name="complication-list"),
     path("vaccination/<int:pk>/complication/create/", ComplicationCreateView.as_view(), name="complication-create"),
     path("complication/<int:pk>/update/", ComplicationUpdateView.as_view(), name="complication-update"),
     path("complication/<int:pk>/delete/", ComplicationDeleteView.as_view(), name="complication-delete"),
+    path("parent/create/", ParentCreateView.as_view(), name="parent-create"),
+    path("parent/<int:pk>/", ParentDetailView.as_view(), name="parent-detail"),
 
 ]
 
