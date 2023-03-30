@@ -27,7 +27,6 @@ class Child(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 
-
 class Vaccine(models.Model):
     name = models.CharField(max_length=50, unique=True)
     number_of_doses = models.IntegerField(default=1)
@@ -52,12 +51,13 @@ class Vaccination(models.Model):
     def __str__(self):
         return f"{self.vaccine} for {self.child}"
 
+
 class Complication(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    description = models.CharField(max_length=50, unique=True)
     date_occurrence = models.DateTimeField(auto_now_add=True)
     vaccination = models.ForeignKey(to=Vaccination, related_name="complications", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.description
 
 
