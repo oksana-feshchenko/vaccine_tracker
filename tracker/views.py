@@ -64,6 +64,56 @@ class ChildDeleteView(LoginRequiredMixin, generic.DeleteView):
         return context
 
 
+class VaccinationDetailView(generic.DetailView):
+    model = Vaccination
+    template_name = "tracker/vaccination_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
+
+
+class VaccinationCreateView(generic.CreateView):
+    model = Vaccination
+    form_class = VaccinationCreateForm
+
+    def get(self, request, *args, **kwargs):
+        child_id = self.kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        child = get_object_or_404(Child, pk=self.kwargs['pk'])
+        form.instance.child = child
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse("tracker:child-detail", kwargs={'pk': self.kwargs['pk']})
+
+
+class VaccinationUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Vaccination
+    fields = ("vaccine", )
+
+    def get_success_url(self, **kwargs):
+        return reverse("tracker:vaccination-detail", kwargs={'pk': self.kwargs['pk']})
+
+
+class VaccinationDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Vaccination
+
+    def get_success_url(self, **kwargs):
+        return reverse("tracker:child-detail", kwargs={'pk': self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
 
 
 

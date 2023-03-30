@@ -26,6 +26,10 @@ urlpatterns = [
     path("children/create/", ChildCreateView.as_view(), name="child-create"),
     path("children/<int:pk>/update/", ChildUpdateView.as_view(), name="child-update"),
     path("children/<int:pk>/delete/", ChildDeleteView.as_view(), name="child-delete"),
+    path("vaccination/<int:pk>/", VaccinationDetailView.as_view(), name="vaccination-detail"),
+    path("children/<int:pk>/vaccination/create/", VaccinationCreateView.as_view(), name="vaccination-create"),
+    path("vaccination/<int:pk>/update/", VaccinationUpdateView.as_view(), name="vaccination-update"),
+    path("vaccination/<int:pk>/delete/", VaccinationDeleteView.as_view(), name="vaccination-delete"),
 
 ]
 
