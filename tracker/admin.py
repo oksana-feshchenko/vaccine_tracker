@@ -42,6 +42,6 @@ class Vaccination(admin.ModelAdmin):
 
 @admin.register(Complication)
 class Complication(admin.ModelAdmin):
-    list_display = ["name", "date_occurrence"]
+    list_display = ["description", "date_occurrence"]
     list_filter = ["date_occurrence"]
-    search_fields = ["name"]
+    search_fields = ["description"]
