@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from tracker.models import Child, Parent, Vaccine, Vaccination
+from tracker.forms import VaccinationCreateForm, ComplicationCreateForm
+from tracker.models import Child, Parent, Vaccine, Vaccination, Complication
 
 
 def index(request):
@@ -41,6 +42,11 @@ class ChildCreateView(generic.CreateView):
     fields = "__all__"
     success_url = reverse_lazy("tracker:child-list")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        return context
+
 
 class ChildUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Child
@@ -57,11 +63,6 @@ class ChildDeleteView(LoginRequiredMixin, generic.DeleteView):
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
         return context
 
-
-class VaccinationDetailView(generic.DetailView):
-    model = Vaccination
-    queryset = Vaccination.objects.prefetch_related("complications")
-    template_name = "tracker/vaccination_detail.html"
 
 
 
