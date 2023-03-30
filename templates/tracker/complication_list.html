@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Soreness where the shot is given or fever can happen after hepatitis B vaccination.</h2>
+  <p>Complication</p>
+  {% if complication_list %}
+    <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Decsription</th>
+          <th>Time when occured</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+
+        {% for complication in complication_list %}
+            <tr>
+              <td>
+                  {{ complication.id }}
+              </td>
+              <td>
+                  {{ complication.description }}
+              </td>
+              <td>
+                  {{ complication.date_occurrence }}
+              </td>
+              <td>
+                  <a href="{% url "tracker:complication-update" pk=complication.id %}">UPDATE</a>
+              </td>
+              <td>
+                  <a href="{% url "tracker:complication-delete" pk=complication.id %}">DELETE</a>
+              </td>
+          </tr>
+        {% endfor %}
+      </table>
+  {% else %}
+  No complication happened after vaccination
+  {% endif %}
+{% endblock %}
