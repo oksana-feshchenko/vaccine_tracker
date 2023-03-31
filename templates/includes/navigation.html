@@ -13,9 +13,9 @@
   </form>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="{% url 'tracker:index' %}">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="{% url 'tracker:child-list' %}">Children</a>
-      <a class="nav-item nav-link" href="{% url 'tracker:vaccine-list' %}">Vaccination calendar</a>
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link active" href="{% url 'tracker:index' %}">Home</a></button>
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link" href="{% url 'tracker:child-list' %}">Children</a></button>
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link" href="{% url 'tracker:vaccine-list' %}">Vaccination calendar</a></button>
     </div>
   </div>
 </nav>
