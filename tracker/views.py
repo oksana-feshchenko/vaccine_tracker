@@ -92,7 +92,7 @@ class VaccinationCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = VaccinationCreateForm
 
     def get(self, request, *args, **kwargs):
-        child_id = self.kwargs.get("pk")
+        kwargs["child_id"] = self.kwargs.get("pk")
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):

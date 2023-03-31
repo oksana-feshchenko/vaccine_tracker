@@ -1,13 +1,16 @@
 {% extends "base_background.html" %}
 
 {% block content %}
-  <h1>{{ object|yesno:"Update,Create" }} child</h1>
-  <form action="" method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <input type="submit" value="Submit" class="btn btn-primary">
-  </form>
-
-   <a class="btn btn-primary" href="{{ previous_url }}">Cancel</a>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <div class="container-fluid py-2">
+      <h1>{{ object|yesno:"Update,Add" }} child information</h1>
+      <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" class="btn btn-primary">
+      </form>
+      <a class="btn btn-primary" href="{% url 'tracker:child-list' %}">Cancel</a>
+    </div>
+  </div>
 {% endblock %}

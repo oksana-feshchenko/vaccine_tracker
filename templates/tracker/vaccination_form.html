@@ -3,32 +3,23 @@
 {% load crispy_forms_filters %}
 
 {% block content %}
-  <header>
-    <div class="page-header min-height-100" style="background-image: url('{% static 'img/bg10.jpg.jpg' %}');" loading="lazy">
-      <span class="mask bg-gradient-dark opacity-8"></span>
-    </div>
-  </header>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-
     <section class="py-sm-7 py-5 position-relative">
       <div class="container">
-        <div class="row">
-          <div class="col-12 mx-auto">
-            <div class="row py-5">
-              <h1>{{ object|yesno:"Update,Create" }} vaccination</h1>
-              <form action="" method="post" novalidate>
-                     {% csrf_token %}
-                    {{ form.as_p }}
+        <div class="row py-5">
+          <h1>{{ object|yesno:"Update,Create" }} vaccination</h1>
+          <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
 
-                 <input type="submit" value="Submit" class="btn btn-primary">
-              </form>
+            <input type="submit" value="Submit" class="btn btn-secondary">
+          </form>
 
-   <a class="btn btn-primary" href="{{ previous_url }}">Go back to vaccination list</a>
-            </div>
-          </div>
         </div>
       </div>
-    </section>
+      <button class="btn btn-primary" href="{{ previous_url }}">Go back to vaccination list</button>
+  </section>
+  </div>
 
 {% endblock %}

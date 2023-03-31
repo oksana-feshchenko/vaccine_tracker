@@ -1,15 +1,19 @@
 {% extends "base_background.html" %}
 {% block content %}
-<h1>LOGIN</h1>
-  {% if form.errors %}
-    <p>Invalid credential</p>
-  {% endif %}
-  <form method="post" action="{% url 'login'%}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <br>
-  <input type="submit" value="login">
-    <input type="hidden" name="next" value = "{{ next }}" >
-  </form>
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <section class="py-sm-2 py-0 position-relative">
+      <h1>LOGIN</h1>
+      {% if form.errors %}
+        <p>Invalid credential</p>
+      {% endif %}
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <input type="submit" value="login">
+        <input type="hidden" name="next" value="{{ next }}">
+      </form>
+    </section>
+  </div>
 {% endblock %}
 

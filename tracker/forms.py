@@ -1,13 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from tracker.models import Vaccination, Complication, Parent
+from tracker.models import Vaccination, Complication, Parent, Vaccine
 
 
 class VaccinationCreateForm(forms.ModelForm):
+    vaccine = forms.ModelChoiceField(queryset=Vaccine.objects.all())
+
     class Meta:
         model = Vaccination
-        fields = ["vaccine"]
+        fields = ['vaccine']
 
 
 class ComplicationCreateForm(forms.ModelForm):
