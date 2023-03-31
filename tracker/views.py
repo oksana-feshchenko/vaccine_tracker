@@ -141,7 +141,6 @@ class ComplicationListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.request.META.get("HTTP_REFERER"))
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
         if len(context["previous_url"].split("/")) >= 8:
             context["vaccine_id"] = context["previous_url"].split("/")[-4]
