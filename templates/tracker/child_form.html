@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% load crispy_forms_filters %}
+{% extends "base_background.html" %}
 
 {% block content %}
   <h1>{{ object|yesno:"Update,Create" }} child</h1>
@@ -9,4 +8,6 @@
 
     <input type="submit" value="Submit" class="btn btn-primary">
   </form>
+
+   <a class="btn btn-primary" href="{{ previous_url }}">Cancel</a>
 {% endblock %}

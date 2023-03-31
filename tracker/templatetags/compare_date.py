@@ -1,8 +1,6 @@
 from datetime import timedelta
 from django import template
 
-from tracker.templatetags.calculate_date import calculate_date
-
 register = template.Library()
 
 

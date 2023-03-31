@@ -17,14 +17,14 @@ class ModelTest(TestCase):
             last_name="last_test",
             gender="male",
             birth_date="2023-01-01",
-            parent_id=1
+            parent_id=1,
         )
-        self.assertEqual(
-            str(child), f"{child.first_name} {child.last_name}"
-        )
+        self.assertEqual(str(child), f"{child.first_name} {child.last_name}")
 
     def test_model_vaccine_str(self):
-        vaccine = Vaccine.objects.create(name="a", number_of_doses=0,age_for_first_dose_days=1)
+        vaccine = Vaccine.objects.create(
+            name="a", number_of_doses=0, age_for_first_dose_days=1
+        )
 
         self.assertEqual(str(vaccine), vaccine.name)
 
@@ -40,13 +40,13 @@ class ModelTest(TestCase):
             last_name="last_test",
             gender="male",
             birth_date="2023-01-01",
-            parent_id=1
+            parent_id=1,
         )
-        vaccine = Vaccine.objects.create(name="a", number_of_doses=0, age_for_first_dose_days=1)
+        vaccine = Vaccine.objects.create(
+            name="a", number_of_doses=0, age_for_first_dose_days=1
+        )
         vaccination = Vaccination.objects.create(vaccine=vaccine, child=child)
         self.assertEqual(
             str(vaccination),
             f"{vaccination.vaccine} for {vaccination.child}",
         )
-
-

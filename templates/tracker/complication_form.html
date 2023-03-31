@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_background.html" %}
 {% load crispy_forms_filters %}
 
 {% block content %}
@@ -9,5 +9,5 @@
 
     <input type="submit" value="Submit" class="btn btn-primary">
   </form>
-   <a class="btn btn-primary" href="{{ previous_url }}">Go back to complication list</a>
+   <a class="btn btn-secondary" href="{{ previous_url }}">Go back</a>
 {% endblock %}

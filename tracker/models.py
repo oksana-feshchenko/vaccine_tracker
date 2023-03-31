@@ -16,7 +16,7 @@ class Child(models.Model):
     parent = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         related_name="children",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     class Meta:
@@ -40,8 +40,12 @@ class Vaccine(models.Model):
 
 
 class Vaccination(models.Model):
-    vaccine = models.ForeignKey(to=Vaccine, related_name="vaccines", on_delete=models.CASCADE)
-    child = models.ForeignKey(to=Child, on_delete=models.CASCADE, related_name="vaccinations")
+    vaccine = models.ForeignKey(
+        to=Vaccine, related_name="vaccines", on_delete=models.CASCADE
+    )
+    child = models.ForeignKey(
+        to=Child, on_delete=models.CASCADE, related_name="vaccinations"
+    )
     date_vaccination = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
 
@@ -53,11 +57,11 @@ class Vaccination(models.Model):
 
 
 class Complication(models.Model):
-    description = models.CharField(max_length=50, unique=True)
+    description = models.CharField(max_length=50)
     date_occurrence = models.DateTimeField(auto_now_add=True)
-    vaccination = models.ForeignKey(to=Vaccination, related_name="complications", on_delete=models.CASCADE)
+    vaccination = models.ForeignKey(
+        to=Vaccination, related_name="complications", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return self.description
-
-

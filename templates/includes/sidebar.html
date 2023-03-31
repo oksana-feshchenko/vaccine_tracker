@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<ul class="sidebar-nav list-group">
+{% if user.is_authenticated %}
+    <p>User: {{ user.username }}</p>
+{# <a href="{% url "tracker:parent-detail" pk=user.id %}"#}
+    <p class="button alert-danger"><a href="{% url 'logout' %}">Log out</a></p>
+  {% else %}
+    <p class="button"><a href="{% url 'login' %}">Log in</a></p>
+  {% endif %}
+
+  <br>
+
+  <li class="list-group-item"><a href="{% url 'tracker:child-list' %}">Children</a></li>
+</ul>
