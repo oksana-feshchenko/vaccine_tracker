@@ -142,8 +142,11 @@ class ComplicationListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        print(context["previous_url"])
         if len(context["previous_url"].split("/")) >= 8:
             context["vaccine_id"] = context["previous_url"].split("/")[-4]
+        elif len(context["previous_url"].split("/")) == 7:
+            context["vaccine_id"] = context["previous_url"].split("/")[-3]
         else:
             context["vaccine_id"] = context["previous_url"].split("/")[-2]
         return context
@@ -151,8 +154,10 @@ class ComplicationListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         reference = self.request.META.get("HTTP_REFERER").split("/")
-        if len(reference) >= 8:
+        if len(reference) == 8:
             some_value = reference[-4]
+        elif len(reference) == 7:
+            some_value = reference[-3]
         else:
             some_value = reference[-2]
         if some_value:
