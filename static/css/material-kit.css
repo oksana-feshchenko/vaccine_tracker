@@ -53,7 +53,7 @@
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-font-size: 3rem;
+  --bs-body-font-size: 1.25rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #7b809a;
@@ -146,6 +146,7 @@ h2,
 }
 
 @media (min-width: 1200px) {
+
 
   h2,
   .h2 {
@@ -2692,7 +2693,7 @@ progress {
 
 .form-label {
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #7b809a;
 }
@@ -3590,9 +3591,9 @@ textarea.form-control.is-invalid {
 
 .btn {
   --bs-btn-padding-x: 1.5rem;
-  --bs-btn-padding-y: 0.625rem;
+  --bs-btn-padding-y: 1rem;
   --bs-btn-font-family: ;
-  --bs-btn-font-size: 0.75rem;
+  --bs-btn-font-size: 0.8rem;
   --bs-btn-font-weight: 700;
   --bs-btn-line-height: 1.667;
   --bs-btn-color: #7b809a;
@@ -22460,7 +22461,7 @@ body.dark-version {
 
 label,
 .form-label {
-  font-size: 0.875rem;
+  font-size: 2rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
   color: #7b809a;
@@ -23198,8 +23199,8 @@ hr.horizontal.gray-light {
 .navbar .nav-link {
   color: #344767;
   padding: 0.5rem 1rem;
-  font-weight: 400;
-  font-size: 0.875rem;
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .navbar.navbar-absolute {
