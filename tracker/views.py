@@ -165,10 +165,6 @@ class ComplicationCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = ComplicationCreateForm
     success_url = reverse_lazy("tracker:complication-list")
 
-    def get(self, request, *args, **kwargs):
-        vaccine_id = self.kwargs.get("pk")
-        return super().get(request, *args, **kwargs)
-
     def form_valid(self, form):
         vaccination = get_object_or_404(Vaccination, pk=self.kwargs["pk"])
         form.instance.vaccination = vaccination
