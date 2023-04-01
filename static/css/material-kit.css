@@ -3320,8 +3320,9 @@ textarea.form-control-lg {
 .input-group-lg>.form-select,
 .input-group-lg>.input-group-text,
 .input-group-lg>.btn {
-  padding: 0.75rem 0.75rem;
-  font-size: 0.875rem;
+  padding: 0.75rem 0
+  .75rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -3330,7 +3331,7 @@ textarea.form-control-lg {
 .input-group-sm>.input-group-text,
 .input-group-sm>.btn {
   padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
+  font-size: 1rem;
   border-radius: 0.125rem;
 }
 
