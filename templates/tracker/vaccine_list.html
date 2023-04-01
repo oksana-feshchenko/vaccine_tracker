@@ -1,0 +1,52 @@
+{% extends "base_background.html" %}
+{% load static %}
+{% load whole_division %}
+{% block content %}
+
+  <div class="card card-body blur shadow-blur mx-1 mx-md-1 mt-n1 mb-1">
+
+    <section class="py-sm-1 py-1 position-relative">
+      <div class="container">
+        <div class="row py-5">
+          <h3>Recommended vaccination schedule</h3>
+          <table class="table">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Number of doses</th>
+              <th>Recommended age for first dose</th>
+            </tr>
+            {% for vaccine in vaccine_list %}
+              <tr>
+                <td>
+                  {{ vaccine.id }}
+                </td>
+                <td>
+                  {{ vaccine.name }}
+                </td>
+                <td>
+                  {{ vaccine.number_of_doses }}
+                </td>
+                <td>
+                  {% if vaccine.age_for_first_dose_days < 31 %}
+                    {{ vaccine.age_for_first_dose_days }} day{{ vaccine.age_for_first_dose_days|pluralize }}
+                  {% else %}
+                    {% if vaccine.age_for_first_dose_days < 365 %}
+                      {% whole_division vaccine.age_for_first_dose_days 31 %} months
+                    {% else %}
+                      {% if vaccine.age_for_first_dose_days > 365 %}
+                        {% whole_division vaccine.age_for_first_dose_days 365 %} year
+                      {% else %}
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+  </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base_background.html" %}
+{% load static %}
+{% block content %}
+
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <section class="py-sm-1 py-1 position-relative">
+      <div class="container">
+        <a href="{% url 'tracker:child-create' %}" class="btn btn-primary link-to-page"> Add child</a>
+        {% if user.children.all %}
+         <h4> Information about your children</h4>
+          <div class="container-fluid">
+          <table class="table">
+            <tr>
+              <th>ID</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Birth date</th>
+              <th>Number of completed vaccine</th>
+            </tr>
+            {% for child in child_list %}
+              {% if child.parent == user %}
+                <tr>
+                  <td><a href="{% url 'tracker:child-detail' pk=child.id %}"><p
+                      class="badge bg-success">{{ child.id }}</p></a></td>
+                  <td>{{ child.first_name }}</td>
+                  <td>{{ child.last_name }}</td>
+                  <td>{{ child.birth_date }}</td>
+                  <td>{{ child.vaccinations.count }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </table>
+          <p class="badge bg-success">Click on id to find more information</p>
+        {% else %}
+          <div class="container-fluid">
+            <h4>You not registered children on this site</h4>
+            <p>Click on button and fill in information about your child</p>
+            <p>Good luck!</p>
+            <p>Thank you for joining us</p>
+          </div>
+        {% endif %}
+        </div>
+      </div>
+  </section>
+  </div>
+{% endblock %}

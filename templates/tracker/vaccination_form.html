@@ -1,0 +1,24 @@
+{% extends "base_background.html" %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <section class="py-sm-7 py-5 position-relative">
+      <div class="container">
+        <div class="row py-5">
+          <h1>{{ object|yesno:"Update,Create" }} vaccination</h1>
+          <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" value="Submit" class="btn btn-secondary">
+          </form>
+
+        </div>
+      </div>
+      <button class="btn btn-primary" href="{{ previous_url }}">Go back to vaccination list</button>
+  </section>
+  </div>
+{% endblock %}

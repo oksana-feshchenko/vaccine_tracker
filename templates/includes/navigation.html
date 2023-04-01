@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-purple">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  {% if user.is_authenticated %}
+    <form class="form-inline">
+    <button class="btn btn-outline-success" type="button"><a href="{% url 'tracker:parent-detail' pk=user.id %}">{{ user.username }}</a></button>
+    <button class="btn btn-outline-success" type="button"><a href="{% url 'logout' %}">Log out</a></button>
+  {% else %}
+    <button class="btn btn-outline-success" type="button"><a href="{% url 'login' %}">Log in</a></button>
+    <button class="btn btn-outline-success"  type="button"><a href="{% url 'tracker:parent-create' %}">Create an account</a></button>
+  {% endif %}
+  </form>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link active" href="{% url 'tracker:index' %}">Home</a></button>
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link" href="{% url 'tracker:child-list' %}">Children</a></button>
+      <button class="btn btn-link" type="button"><a class="nav-item nav-link" href="{% url 'tracker:vaccine-list' %}">Vaccination calendar</a></button>
+    </div>
+  </div>
+</nav>

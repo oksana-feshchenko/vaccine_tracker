@@ -1,0 +1,70 @@
+{% extends "base_background.html" %}
+{% block content %}
+{#   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">#}
+{#    <!-- Section with four info areas left & one card right with image and waves -->#}
+    <section class="py-7">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="row justify-content-start">
+              <div class="col-md-6">
+                <div class="info">
+                  <i class="material-icons text-3xl text-gradient text-info mb-3">public</i>
+                  <h5>Hello!</h5>
+                  <h1>{{user.username}}</h1>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info">
+                  <i class="material-icons text-3xl text-gradient text-info mb-3">payments</i>
+                   <p>Email:</p>
+                  {% if user.email %}
+                  <p>{{ user.email}}</p>
+                    {%  else %}
+                    No information
+                  {% endif %}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-start mt-4">
+              <div class="col-md-6">
+                <div class="info">
+                  <i class="material-icons text-3xl text-gradient text-info mb-3">apps</i>
+                  <h5>Full name </h5>
+                  {% if user.first_name %}
+                  <p>{{ user.first_name }} {{ user.last_name }}</p>
+                    {%  else %}
+                    No information
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info">
+                  <i class="material-icons text-3xl text-gradient text-info mb-3">3p</i>
+                   <h5>Children</h5>
+                  {% if user.children.all %}
+                  <p>You registered {{ user.children.count }} child {{user.children.count|pluralize:"ren" }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 ms-auto mt-lg-0 mt-4">
+            <div class="card">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <a class="d-block blur-shadow-image">
+                  <img src="https://cf.ltkcdn.net/kids/images/std/240535-800x534r1-Couple-kissing-baby.webp" alt="img-colored-shadow" class="img-fluid border-radius-lg">
+                </a>
+              </div>
+              <div class="card-body text-center">
+                <h5 class="font-weight-normal">
+                  <a href="javascript:;">Take care about your family</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

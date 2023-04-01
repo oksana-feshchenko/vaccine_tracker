@@ -1,0 +1,79 @@
+{% extends "base_background.html" %}
+{% load static %}
+{% block content %}
+
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+
+    <section class="py-sm-2 py-0 position-relative">
+      <div class="container">
+        <div class="row">
+          <section class="py-2">
+            <div class="container py-3">
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="row justify-content-start">
+                    <div class="col-md-6">
+                      <div class="info">
+                        <i class="material-icons text-3xl text-gradient text-info mb-3">public</i>
+                        <h5>Vaccine</h5>
+                        <p>{{ vaccination.vaccine }}</p>
+                        <a href="{% url "tracker:vaccination-update" pk=vaccination.id %}"
+                           class="btn btn-primary link-to-page">UPDATE</a>
+                        <a href="{% url "tracker:vaccination-delete" c_id=vaccination.child_id pk=vaccination.id %}"
+                           class="btn btn-secondary link-to-page">DELETE</a>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="info">
+                        <i class="material-icons text-3xl text-gradient text-info mb-3">payments</i>
+                        <h5>Number of side effects</h5>
+                        <p>{{ vaccination.complications.count }}</p>
+                        <a href="{% url 'tracker:complication-create'  pk=vaccination.id %}"
+                           class="btn btn-dark link-to-page">
+                          Add more
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row justify-content-start mt-4">
+                    <div class="col-md-6">
+                      <div class="info">
+                        <i class="material-icons text-3xl text-gradient text-info mb-3">apps</i>
+                        <h5>Time</h5>
+                        <p>{{ vaccination.date_vaccination }}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="info">
+                        <i class="material-icons text-3xl text-gradient text-info mb-3">3p</i>
+                        <h5>Child</h5>
+                        <p> {{ vaccination.child }} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 ms-auto mt-lg-1 mt-3">
+                  <div class="card-header p-3 position-relative mt-n4 mx-0 z-index-2">
+                    <a class="d-block blur-shadow-image py-1">
+                      <img
+                          src="https://i0.wp.com/calmatters.org/wp-content/uploads/2022/06/062122-COVID-Vaccine-Children-CM-01.jpg?resize=1536%2C1024&ssl=1"
+                          alt="img-colored-shadow" class="img-fluid border-radius-sm">
+                    </a>
+                    <div class="card-body text-center">
+                      <h5 class="font-weight-normal">
+                        <a href="javascript:;">More information about side effects</a>
+                      </h5>
+                      <a href="{% url 'tracker:complication-list' %}" class="btn btn-primary btn-block"> Click</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+  </div>
+  </section>
+
+{% endblock %}
+

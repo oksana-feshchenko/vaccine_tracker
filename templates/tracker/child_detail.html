@@ -1,0 +1,66 @@
+{% extends "base_background.html" %}
+
+{% load static %}
+{% load compare_date %}
+{% load calculate_date %}
+
+{% block content %}
+  <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <section class="py-sm-1 py-1 position-relative">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-12 col-md-6">
+            <h2 class="text-center mb-2">Child: {{ child.first_name }} {{ child.last_name }}</h2>
+            <p class="text-center mb-3">What do you want to do with information about {{ child.first_name }}?</p>
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'tracker:child-delete' pk=child.id %}"
+                 class="btn btn-secondary link-to-page me-2">Delete</a>
+              <a href="{% url 'tracker:child-update' pk=child.id %}" class="btn btn-secondary link-to-page">Update</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-4">
+          <div class="col-12 col-md-6">
+            <h4 class="text-center mb-2">Add information about new vaccination to {{ child.first_name }}?</h4>
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'tracker:vaccination-create' pk=child.id %}" class="btn btn-primary">Add</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if child.vaccinations.all %}
+        <div class="btn-block bg-gray-600">
+          <h3 style="text-align: center">Vaccine that {{ child.first_name }} already received</h3>
+        </div>
+        <div class="container-fluid">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Recommended date</th>
+              <th>Actual date</th>
+              <th>Timing</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vaccination in child.vaccinations.all %}
+              <tr>
+                <td>
+                  <a class="badge bg-success" href="{% url 'tracker:vaccination-detail' vaccination.id %}">
+                    {{ vaccination.vaccine }}
+                  </a>
+                </td>
+                <td>{% calculate_date child.birth_date vaccination.vaccine.age_for_first_dose_days %}</td>
+                <td>{{ vaccination.date_vaccination }}</td>
+                <td>{% compare_date child.birth_date vaccination.vaccine.age_for_first_dose_days vaccination.date_vaccination %}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <p class="badge bg-success">Click on vaccine name to find out more</p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
