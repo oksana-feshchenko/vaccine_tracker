@@ -9,16 +9,18 @@
       <div class="container">
         <div class="row py-5">
           <h1>{{ object|yesno:"Update,Create" }} vaccination</h1>
-          <form action="" method="post" novalidate>
+          <form action="" method="post" novalidate class=>
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
 
-            <input type="submit" value="Submit" class="btn btn-secondary">
+            <div style="display: flex;">
+              <button type="submit" class="btn btn-primary m-2">Save</button>
+<button class="btn btn-behance m-2 p-2" href="{{ previous_url }}">To vaccination list</button>
+            </div>
           </form>
 
         </div>
       </div>
-      <button class="btn btn-primary" href="{{ previous_url }}">Go back to vaccination list</button>
-  </section>
+    </section>
   </div>
 {% endblock %}

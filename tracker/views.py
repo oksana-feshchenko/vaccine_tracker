@@ -11,6 +11,7 @@ from tracker.forms import (
     ParentCreationForm,
 )
 from tracker.models import Child, Parent, Vaccine, Vaccination, Complication
+from tracker.utils import get_referer, get_vaccine_id_from_url
 
 
 def index(request):
@@ -39,20 +40,20 @@ class ChildListView(LoginRequiredMixin, generic.ListView):
     template_name = "tracker/child_list.html"
 
 
-class ChildDetailView(generic.DetailView, LoginRequiredMixin):
+class ChildDetailView(LoginRequiredMixin, generic.DetailView):
     model = Child
     queryset = Child.objects.prefetch_related("vaccinations")
     template_name = "tracker/child_detail.html"
 
 
-class ChildCreateView(generic.CreateView, LoginRequiredMixin):
+class ChildCreateView(LoginRequiredMixin, generic.CreateView):
     model = Child
     fields = ("first_name", "last_name", "gender", "birth_date")
     success_url = reverse_lazy("tracker:child-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
     def form_valid(self, form):
@@ -72,7 +73,7 @@ class ChildDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
 
@@ -82,8 +83,7 @@ class VaccinationDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
-
+        context["previous_url"] = get_referer(self.request)
         return context
 
 
@@ -102,7 +102,7 @@ class VaccinationCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
     def get_success_url(self, **kwargs):
@@ -131,7 +131,7 @@ class VaccinationDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
 
@@ -141,25 +141,14 @@ class ComplicationListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
-        print(context["previous_url"])
-        if len(context["previous_url"].split("/")) >= 8:
-            context["vaccine_id"] = context["previous_url"].split("/")[-4]
-        elif len(context["previous_url"].split("/")) == 7:
-            context["vaccine_id"] = context["previous_url"].split("/")[-3]
-        else:
-            context["vaccine_id"] = context["previous_url"].split("/")[-2]
+        context["previous_url"] = get_referer(self.request)
+        context["vaccine_id"] = get_vaccine_id_from_url(context["previous_url"])
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        reference = self.request.META.get("HTTP_REFERER").split("/")
-        if len(reference) == 8:
-            some_value = reference[-4]
-        elif len(reference) == 7:
-            some_value = reference[-3]
-        else:
-            some_value = reference[-2]
+        reference = get_referer(self.request)
+        some_value = get_vaccine_id_from_url(reference)
         if some_value:
             queryset = queryset.filter(vaccination_id=some_value)
         return queryset
@@ -177,7 +166,7 @@ class ComplicationCreateView(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
 
@@ -193,7 +182,7 @@ class ComplicationDeleteView(LoginRequiredMixin, generic.DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["previous_url"] = self.request.META.get("HTTP_REFERER")
+        context["previous_url"] = get_referer(self.request)
         return context
 
 

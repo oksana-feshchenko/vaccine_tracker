@@ -78,7 +78,7 @@
 		"../scss/bootstrap/_forms.scss",
 		"../scss/bootstrap/forms/_labels.scss",
 		"../scss/bootstrap/forms/_form-text.scss",
-		"../scss/bootstrap/forms/_form-control.scss",
+//		"../scss/bootstrap/forms/_form-control.scss",
 		"../scss/bootstrap/forms/_form-select.scss",
 		"../scss/bootstrap/forms/_form-check.scss",
 		"../scss/bootstrap/forms/_form-range.scss",

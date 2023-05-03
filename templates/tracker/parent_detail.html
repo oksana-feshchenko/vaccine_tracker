@@ -17,7 +17,7 @@
               <div class="col-md-6">
                 <div class="info">
                   <i class="material-icons text-3xl text-gradient text-info mb-3">payments</i>
-                   <p>Email:</p>
+                   <h5>Email:</h5>
                   {% if user.email %}
                   <p>{{ user.email}}</p>
                     {%  else %}
@@ -45,6 +45,8 @@
                    <h5>Children</h5>
                   {% if user.children.all %}
                   <p>You registered {{ user.children.count }} child {{user.children.count|pluralize:"ren" }}</p>
+                    {%  else %}
+                    No information
                   {% endif %}
                 </div>
               </div>
@@ -59,7 +61,7 @@
               </div>
               <div class="card-body text-center">
                 <h5 class="font-weight-normal">
-                  <a href="javascript:;">Take care about your family</a>
+                  Take care about your family
                 </h5>
               </div>
             </div>
