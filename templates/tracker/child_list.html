@@ -5,10 +5,10 @@
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <section class="py-sm-1 py-1 position-relative">
       <div class="container">
-        <a href="{% url 'tracker:child-create' %}" class="btn btn-primary link-to-page"> Add child</a>
         {% if user.children.all %}
          <h4> Information about your children</h4>
           <div class="container-fluid">
+          <p class="badge bg-success">Click on id to find more information</p>
           <table class="table">
             <tr>
               <th>ID</th>
@@ -30,11 +30,12 @@
               {% endif %}
             {% endfor %}
           </table>
-          <p class="badge bg-success">Click on id to find more information</p>
+          <a href="{% url 'tracker:child-create' %}" class="btn btn-primary link-to-page"> Add child</a>
         {% else %}
           <div class="container-fluid">
             <h4>You not registered children on this site</h4>
             <p>Click on button and fill in information about your child</p>
+            <a href="{% url 'tracker:child-create' %}" class="btn btn-primary link-to-page"> Add child</a>
             <p>Good luck!</p>
             <p>Thank you for joining us</p>
           </div>

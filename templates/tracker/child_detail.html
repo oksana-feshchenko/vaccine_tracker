@@ -6,29 +6,28 @@
 
 {% block content %}
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
-    <section class="py-sm-1 py-1 position-relative">
-      <div class="container">
-        <div class="row justify-content-center mb-4">
-          <div class="col-12 col-md-6">
-            <h2 class="text-center mb-2">Child: {{ child.first_name }} {{ child.last_name }}</h2>
-            <p class="text-center mb-3">What do you want to do with information about {{ child.first_name }}?</p>
-            <div class="d-flex justify-content-center">
-              <a href="{% url 'tracker:child-delete' pk=child.id %}"
-                 class="btn btn-secondary link-to-page me-2">Delete</a>
-              <a href="{% url 'tracker:child-update' pk=child.id %}" class="btn btn-secondary link-to-page">Update</a>
-            </div>
+  <section class="py-sm-1 py-1 position-relative">
+    <div class="container">
+      <div class="row justify-content-center mb-4">
+        <div class="col-md-7 col-12 mb-4 mb-md-0">
+          <h3 class="text-center mb-2">Name: {{ child.first_name }} {{ child.last_name }}</h3>
+           <div class="d-flex justify-content-center">
+            <a href="{% url 'tracker:child-delete' pk=child.id %}" class="btn btn-secondary link-to-page me-2">Delete information</a>
+            <a href="{% url 'tracker:child-update' pk=child.id %}" class="btn btn-secondary link-to-page">Update information</a>
           </div>
-        </div>
 
-        <div class="row justify-content-center mb-4">
-          <div class="col-12 col-md-6">
-            <h4 class="text-center mb-2">Add information about new vaccination to {{ child.first_name }}?</h4>
-            <div class="d-flex justify-content-center">
-              <a href="{% url 'tracker:vaccination-create' pk=child.id %}" class="btn btn-primary">Add</a>
-            </div>
+        </div>
+        <div class="col-md-5 col-12">
+          <h3 class="text-center mb-2">{{ child.first_name }} received new vaccination?</h3>
+          <div class="d-flex justify-content-center">
+            <a href="{% url 'tracker:vaccination-create' pk=child.id %}" class="btn btn-primary">Add vaccination</a>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+</div>
+
       {% if child.vaccinations.all %}
         <div class="btn-block bg-gray-600">
           <h3 style="text-align: center">Vaccine that {{ child.first_name }} already received</h3>
@@ -37,7 +36,7 @@
           <table class="table">
             <thead>
             <tr>
-              <th>Name</th>
+              <th>Name(Click on vaccine name to find out more)</th>
               <th>Recommended date</th>
               <th>Actual date</th>
               <th>Timing</th>
@@ -58,7 +57,7 @@
             {% endfor %}
             </tbody>
           </table>
-          <p class="badge bg-success">Click on vaccine name to find out more</p>
+
         </div>
       {% endif %}
     </section>
