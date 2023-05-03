@@ -1,4 +1,5 @@
 {% extends "base_background.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <section class="py-sm-2 py-0 position-relative">
@@ -8,9 +9,9 @@
       {% endif %}
       <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <br>
-        <input type="submit" value="login">
+         <button type="submit" value="login" class="btn btn-behance m-2">Login</button>
         <input type="hidden" name="next" value="{{ next }}">
       </form>
     </section>
